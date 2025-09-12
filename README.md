@@ -9,7 +9,7 @@ The cord must have the data pins connected.
 Splitter cords with multiple types of connectors fanning out may not have data pins connected.
 Such micro-USB cords can be found locally at Microcenter, convenience stores, etc.
 The student laptop is used to program the Pi Pico.
-The laptop software to program and debug the Pi Pico works on macOS, Windows, and Linux.
+The laptop software to program and debug the Pi Pico works on macOS, Windows, and Linux. 
 
 This miniproject focuses on using
 [MicroPython](./doc/micropython.md)
