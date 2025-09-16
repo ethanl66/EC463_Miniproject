@@ -21,7 +21,7 @@ print(f"\nAverage calibrated ADC value: {average_val:.2f}")
 # Function to play a tone
 def play_tone(frequency, duration):
     buzzer.freq(frequency)
-    buzzer.duty_u16(400)  # Volume
+    buzzer.duty_u16(5000)  # Volume
     time.sleep(duration)
     #buzzer.duty_u16(0)
 
@@ -33,8 +33,14 @@ while (1):
     # 0 --> 2^8 (middle C)
     # -30000 --> 2^4 Hz
     
-    hz = pow(2, (4+(8*(val1+30000))/60000))
-    hz = round(int(hz), -1)
+    #hz = int(pow(2, 8) * pow((5/4), ((val1*7)/30000)))
+    
+    x = max(min(val1, 30000), -30000)
+    step = round((x/30000.0) * 28.0)
+    hz = int(256.0 * (1.25 ** step))
+    
+#     hz = pow(2, (4+(8*(val1+30000))/60000))
+#     hz = round(int(hz), -1)
     
     print(val1, hz)
     play_tone(hz, 0.20)
