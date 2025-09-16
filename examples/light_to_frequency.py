@@ -21,19 +21,30 @@ print(f"\nAverage calibrated ADC value: {average_val:.2f}")
 # Function to play a tone
 def play_tone(frequency, duration):
     buzzer.freq(frequency)
-    buzzer.duty_u16(20000)  # Volume
+    buzzer.duty_u16(400)  # Volume
     time.sleep(duration)
-    buzzer.duty_u16(0)
+    #buzzer.duty_u16(0)
 
 while (1):
     val1 = adc.read_u16() - average_val # read a raw analog value in the range 0-65535
-    print(val1)
-    if val1 < -30000:
-        play_tone(139, 1)
-    elif val1 > -30000 and val1 < 0:
-        play_tone(247, 1)
-    elif val1 > 0 and val1 < 30000:
-        play_tone(659, 1)
-    else:
-        play_tone(740, 1)
+
+    # abs(val1)^2 --> Hz
+    # 30000 --> 2^12
+    # 0 --> 2^8 (middle C)
+    # -30000 --> 2^4 Hz
+    
+    hz = pow(2, (4+(8*(val1+30000))/60000))
+    hz = round(int(hz), -1)
+    
+    print(val1, hz)
+    play_tone(hz, 0.20)
+    
+#     if val1 < -30000:
+#         play_tone(139, 1)
+#     elif val1 > -30000 and val1 < 0:
+#         play_tone(247, 1)
+#     elif val1 > 0 and val1 < 30000:
+#         play_tone(659, 1)
+#     else:
+#         play_tone(740, 1)
         
